@@ -7,7 +7,7 @@ class State {
 protected:
 
 	sf::RenderWindow *window;
-	std::map<std::string, int> *supportedKeys;
+	std::map<std::string, int> supportedKeys;
 	bool quit;
 
 	// Reources
@@ -16,7 +16,7 @@ protected:
 
 public:
 
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	State(sf::RenderWindow* window, std::map<std::string, int> supportedKeys);
 	virtual ~State();
 
 	const bool& getQuit() const;

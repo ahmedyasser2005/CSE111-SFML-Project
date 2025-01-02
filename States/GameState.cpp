@@ -1,7 +1,7 @@
 #include "GameState.hpp"
 
 // Constructor
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys) : State(window, supportedKeys) {}
+GameState::GameState(sf::RenderWindow* window, std::map<std::string, int> supportedKeys) : State(window, supportedKeys) {}
 
 // Destructor
 GameState::~GameState()

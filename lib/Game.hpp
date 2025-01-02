@@ -12,7 +12,7 @@ private:
     sf::Clock dtClock;
     float dt;
 
-    std::map<std::string, int> *supportedKeys;
+    std::map<std::string, int> supportedKeys;
 
     // Init Functions
     void initWindow();

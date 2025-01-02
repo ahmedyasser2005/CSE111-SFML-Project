@@ -38,15 +38,15 @@ void Game::initWindow()
 
 void Game::initKeys()
 {
-    this->supportedKeys->emplace("W", sf::Keyboard::Key::W);
-    this->supportedKeys->emplace("A", sf::Keyboard::Key::A);
-    this->supportedKeys->emplace("S", sf::Keyboard::Key::S);
-    this->supportedKeys->emplace("D", sf::Keyboard::Key::D);
+    this->supportedKeys.emplace("A", (int)sf::Keyboard::Key::A);
+    this->supportedKeys.emplace("D", (int)sf::Keyboard::Key::D);
+    this->supportedKeys.emplace("W", (int)sf::Keyboard::Key::W);
+    this->supportedKeys.emplace("S", (int)sf::Keyboard::Key::S);
 
-    std::cout << this->supportedKeys->at("W") << '\n';
-    std::cout << this->supportedKeys->at("A") << '\n';
-    std::cout << this->supportedKeys->at("S") << '\n';
-    std::cout << this->supportedKeys->at("D") << '\n';
+    std::cout << this->supportedKeys.at("W") << '\n';
+    std::cout << this->supportedKeys.at("A") << '\n';
+    std::cout << this->supportedKeys.at("S") << '\n';
+    std::cout << this->supportedKeys.at("D") << '\n';
 }
 
 void Game::initStates()
