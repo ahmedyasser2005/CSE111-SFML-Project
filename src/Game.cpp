@@ -16,8 +16,7 @@ void Game::initWindow()
 
 
     // Config File
-
-    std::ifstream ifs("C:\\Users\\ahmed\\source\\repos\\ahmedyasser2005\\CSE111-SFML-Project\\config\\window.ini");
+	std::ifstream ifs(static_cast<std::string>(SOLUTION_DIR) + "config/window.ini"); // SOLUTION_DIR is a macro that gives the path to the solution directory and it's defined in CMakeLists.txt
     if (ifs.is_open()) {
         getline(ifs, title);
         ifs >> fps;
