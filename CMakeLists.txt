@@ -18,14 +18,15 @@ add_executable(
     "src/Game.cpp"
     "lib/Game.hpp"
 
-    "src/TileMap.cpp"
-    "lib/TileMap.hpp"
-    
-    "src/State.cpp"
-    "lib/State.hpp"
+    "States/State.cpp"
+    "States/State.hpp"
 
-    "src/GameState.cpp"
-    "lib/GameState.hpp"
+    "States/GameState.cpp"
+    "States/GameState.hpp"
+
+    "Entities/Entity.cpp"
+    "Entities/Entity.hpp"
+
 )
 
 target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio SFML::Network)

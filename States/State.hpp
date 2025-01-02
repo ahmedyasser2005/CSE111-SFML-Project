@@ -1,26 +1,22 @@
 #ifndef STATE_HPP
 #define STATE_HPP
 
-#include <SFML/Graphics.hpp>
-
-#include <iostream>
-#include <fstream>
-
-#include <vector>
-#include <stack>
-#include <map>
+#include "../Entities/Entity.hpp"
 
 class State {
-private:
+protected:
 
-	sf::RenderWindow* window;
+	sf::RenderWindow *window;
+	std::map<std::string, int> *supportedKeys;
+	bool quit;
+
+	// Reources
 	std::vector<sf::Texture> textures;
 
-	bool quit;
 
 public:
 
-	State(sf::RenderWindow* window);
+	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
 	virtual ~State();
 
 	const bool& getQuit() const;
@@ -28,7 +24,7 @@ public:
 	virtual void checkForQuit();
 
 	virtual void endState() = 0;
-	virtual void updateKeybinds(const float& dt) = 0;
+	virtual void updateInput(const float& dt) = 0;
 	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderTarget* target = nullptr) = 0;
 

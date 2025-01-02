@@ -11,7 +11,9 @@ void Game::initWindow()
     std::string  title      = "Config didn't load!";
     unsigned int fps        = 60;
     bool         vsync      = true;
-    bool windowMode         = 0;
+    bool         windowMode = 0;
+
+
 
     // Config File
 
@@ -25,38 +27,33 @@ void Game::initWindow()
         ifs.close();
     }
 
+
+
     // Initlizing
 
     this->window = new sf::RenderWindow(sf::VideoMode({ 1024u, 720u }), title, sf::Style::Default, static_cast<sf::State>(windowMode));
     this->window->setFramerateLimit(fps);
     this->window->setVerticalSyncEnabled(vsync);
 }
+
+void Game::initKeys()
+{
+    this->supportedKeys->emplace("W", sf::Keyboard::Key::W);
+    this->supportedKeys->emplace("A", sf::Keyboard::Key::A);
+    this->supportedKeys->emplace("S", sf::Keyboard::Key::S);
+    this->supportedKeys->emplace("D", sf::Keyboard::Key::D);
+
+    std::cout << this->supportedKeys->at("W") << '\n';
+    std::cout << this->supportedKeys->at("A") << '\n';
+    std::cout << this->supportedKeys->at("S") << '\n';
+    std::cout << this->supportedKeys->at("D") << '\n';
+}
+
 void Game::initStates()
 {
-    this->states.push(new GameState(this->window));
+    this->states.push(new GameState(this->window, this->supportedKeys));
 }
-// Game Map Initilizer
-void Game::initMap()
-{
-    constexpr std::array level = {
-            0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-            1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,
-            0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0,
-            0, 1, 1, 0, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0,
-            0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0,
-            2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1,
-            0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1,
-    };
 
-    if (!this->gameMap.load(
-        "C:\\Users\\ahmed\\source\\repos\\ahmedyasser2005\\CSE111-SFML-Project\\assets\\tileset.png",
-        { 32, 32 },
-        level.data(),
-        16, 8
-    ))
-        throw sf::Exception::runtime_error("Couldn't Load the Map!");
-}
 
 
 // Constructor Destructor Functions
@@ -65,8 +62,8 @@ void Game::initMap()
 Game::Game()
 {
     this->initWindow();
+    this->initKeys();
     this->initStates();
-    this->initMap();
 }
 // Destructor
 Game::~Game()
@@ -82,13 +79,11 @@ Game::~Game()
 
 
 
-
-
 // Regular Functions
 
 void Game::endApplication()
 {
-    std::cout << "Ending Application..." << std::endl;
+    std::cout << "Ending Application..." << '\n';
 }
 
 
@@ -143,7 +138,6 @@ void Game::update()
 
 
 
-
 // Core Functions
 
 // Draw Items in the screen
@@ -156,8 +150,6 @@ void Game::render()
     if (!this->states.empty()) {
         states.top()->render(this->window);
     }
-
-    this->window->draw(this->gameMap);
 
     // End
 

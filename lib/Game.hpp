@@ -1,56 +1,50 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "GameState.hpp"
-#include "TileMap.hpp"
+#include "../States/GameState.hpp"
 
 class Game {
 private:
 
     // Attributes
-
     sf::RenderWindow *window;
     std::stack<State *> states;
     sf::Clock dtClock;
     float dt;
 
-
-    TileMap gameMap;
-    
-
+    std::map<std::string, int> *supportedKeys;
 
     // Init Functions
-
     void initWindow();
+    void initKeys();
     void initStates();
-    void initMap();
+
 
     // Regular Functions
-
     void endApplication();
 
-    // Update Functions
 
+
+    // Update Functions
     void updateDt();
     void eventUpdate();
     void update();
 
-    // Render Functions
 
+
+    // Render Functions
     void render();
 
 
 public:
 
     // Constructor / Destructor
-
     Game();
     virtual ~Game();
 
 
 
     // Core Functions
-
     void run();
 
 };
