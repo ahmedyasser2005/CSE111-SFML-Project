@@ -14,9 +14,10 @@ void Game::initWindow()
     bool         windowMode = 0;
 
 
+	//std::cout << std::filesystem::current_path() << '\n';     // Debugging Purposes
 
     // Config File
-	std::ifstream ifs(static_cast<std::string>(SOLUTION_DIR) + "config/window.ini"); // SOLUTION_DIR is a macro that gives the path to the solution directory and it's defined in CMakeLists.txt
+	std::ifstream ifs(static_cast<std::string>(SOLUTION_DIR) + "config/window.ini"); // SOLUTION_DIR is a macro that returns the path to the solution directory and it's defined in CMakeLists.txt
     if (ifs.is_open()) {
         getline(ifs, title);
         ifs >> fps;
@@ -37,20 +38,25 @@ void Game::initWindow()
 
 void Game::initKeys()
 {
-    this->supportedKeys.emplace("A", (int)sf::Keyboard::Key::A);
-    this->supportedKeys.emplace("D", (int)sf::Keyboard::Key::D);
-    this->supportedKeys.emplace("W", (int)sf::Keyboard::Key::W);
-    this->supportedKeys.emplace("S", (int)sf::Keyboard::Key::S);
+    std::ifstream ifs(static_cast<std::string>(SOLUTION_DIR) + "config/supported_keys.ini");
+    if (ifs.is_open()) {
+        std::string key = "";
+        int key_value = 0;
+        while (ifs >> key >> key_value) {
+            this->supportedKeys[key] = key_value;
+        }
+    }
+    ifs.close();
 
-    std::cout << this->supportedKeys.at("W") << '\n';
-    std::cout << this->supportedKeys.at("A") << '\n';
-    std::cout << this->supportedKeys.at("S") << '\n';
-    std::cout << this->supportedKeys.at("D") << '\n';
+	// Debug Purposes
+	for (auto i : this->supportedKeys) {
+		std::cout << "Key: " << i.first << ",\t\tCode: " << i.second << '\n';
+	} std::cout << '\n';
 }
 
 void Game::initStates()
 {
-    this->states.push(new GameState(this->window, this->supportedKeys));
+    this->states.push(new GameState(this->window, &this->supportedKeys));
 }
 
 
@@ -102,7 +108,7 @@ void Game::eventUpdate()
     {
         // Catch Events Here
 
-        if (!this->states.empty()) {
+		if (!this->states.empty()) { // If not empty update the state and check if it's time to quit the state.
             this->states.top()->update(this->dt);
 
             if (this->states.top()->getQuit()) {
@@ -113,14 +119,14 @@ void Game::eventUpdate()
             
             }
         }
-        else {
+        else { // If empty just close the program
             this->endApplication();
             this->window->close();
         }
 
         // End
 
-        if (event->is<sf::Event::Closed>())
+		if (event->is<sf::Event::Closed>()) // If the user closes the window
         {
             this->window->close();
         }

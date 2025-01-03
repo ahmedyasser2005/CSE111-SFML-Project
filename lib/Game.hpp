@@ -7,8 +7,8 @@ class Game {
 private:
 
     // Attributes
-    sf::RenderWindow *window;
-    std::stack<State *> states;
+    sf::RenderWindow* window;
+    std::stack<State*> states;
     sf::Clock dtClock;
     float dt;
 
